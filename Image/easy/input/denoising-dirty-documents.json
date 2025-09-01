@@ -1,0 +1,26 @@
+{
+  "task_type": "regression",
+  "goal_description": "Clean noisy images of scanned text by predicting the correct grayscale pixel intensities to minimize noise.",
+  "metric": {
+    "metric_name": "Root Mean Squared Error",
+    "metric_formula": "RMSE = sqrt(1/n * Σ(predicted - actual)^2)"
+  },
+  "target_col": "value",
+  "data_information": {
+    "data_type": "Image",
+    "train": {
+      "data_location": "train and train_cleaned datasets",
+      "data_description": "Images contain noisy text with synthetic artifacts; train_cleaned provides the corresponding clean versions. Pixel values range from 0 (black) to 1 (white)."
+    },
+    "test": {
+      "data_location": "test dataset",
+      "data_description": "Images contain noisy text with synthetic artifacts, but no clean version is provided."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "id,value\\n1_1_1,1\\n1_2_1,1\\n1_3_1,1\\netc.",
+  "special_instructions": "1. Each image must be melted into individual pixels with an id format of image_row_col. 2. Intensity values should range between 0 (black) and 1 (white). 3. The submission file must include a header row. 4. Must use features such as pixel intensity, position (row and column), and image id for modeling. 5. A convolutional neural network (CNN) or similar model specialized in image processing is recommended for this task. 6. Model parameters such as learning rate, number of layers, kernel size, and activation functions should be tuned for optimal performance."
+}

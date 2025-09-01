@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Build an algorithm that predicts the correct label for simple spoken commands from audio clips.",
+  "metric": {
+    "metric_name": "Multiclass Accuracy",
+    "metric_formula": ""
+  },
+  "target_col": "label",
+  "data_information": {
+    "data_type": "Audio",
+    "train": {
+      "data_location": "train.7z",
+      "data_description": "Contains a few informational files and a folder of audio files. The audio folder contains subfolders with 1-second clips of voice commands, with the folder name being the label of the audio clip. Labels include `yes`, `no`, `up`, `down`, `left`, `right`, `on`, `off`, `stop`, `go`, `silence`, and `unknown`. The `_background_noise_` folder contains longer clips of 'silence' that can be used for training. Audio files are not uniquely named across labels but are unique when including the label folder. Files have inconsistent properties such as length. Features to extract could include MFCCs, spectrograms, or raw audio signals."
+    },
+    "test": {
+      "data_location": "test.7z",
+      "data_description": "Contains an audio folder with 150,000+ files in the format `clip_*.wav`. The task is to predict the correct label for each file. Not all files are evaluated for the leaderboard score. Test data may contain unseen subjects and should be processed accordingly."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "fname,label\nclip_000044442.wav,silence\nclip_0000adecb.wav,left\nclip_0000d4322.wav,unknown\netc.",
+  "special_instructions": "1. The `unknown` label should be used for any command that is not one of the first 10 labels (`yes`, `no`, `up`, `down`, `left`, `right`, `on`, `off`, `stop`, `go`) or that is not `silence`. 2. The training data includes repeated commands by the same subject, but the test data assumes most commands are from unseen subjects. 3. Use the `_background_noise_` folder to generate additional silence samples for training if needed. 4. Must-use features: Consider extracting acoustic features such as MFCCs (Mel-Frequency Cepstral Coefficients) or spectrograms for model input. 5. Suggested models: CNNs or RNNs for audio classification tasks. Model parameters like learning rate, number of layers, and batch size should be tuned based on validation performance. 6. Preprocessing methods: Handle inconsistent audio lengths by padding/truncating, augment data using background noise, and address class imbalances between labels like `silence` and others."
+}

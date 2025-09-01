@@ -1,0 +1,26 @@
+{
+  "task_type": "sequence_modeling",
+  "goal_description": "Predict the next product a customer is likely to engage with based on their session history and product attributes for English, German, and Japanese locales.",
+  "metric": {
+    "metric_name": "Mean Reciprocal Rank (MRR)",
+    "metric_formula": "$$\\text{MRR@K} = \\frac{1}{N} \\sum_{t=1}^{N} \\frac{1}{\\text{Rank}(t)}$$"
+  },
+  "target_col": "next_item",
+  "data_information": {
+    "data_type": "Multi-Modal",
+    "train": {
+      "data_location": "train split of the Multilingual Shopping Session Dataset",
+      "data_description": "User sessions containing chronological lists of product interactions and product attributes including locale, id (ASIN), title, price, brand, color, size, model, material, author, and desc. Sessions are from six locales: DE, JP, UK, ES, FR, IT. Task 1 focuses on DE, JP, UK. Product attributes should be leveraged for modeling, especially title and brand, which may contain multilingual textual information relevant to user intent."
+    },
+    "test": {
+      "data_location": "phase-1 test split of the Multilingual Shopping Session Dataset",
+      "data_description": "Test set for Task 1 includes sessions from English (UK), German (DE), and Japanese (JP) locales. Each session contains a sequence of product IDs. The next engaged product must be predicted. Models must generalize across multilingual sessions and handle imbalance between high-resource (DE, JP, UK) and low-resource (ES, FR, IT) locales during training."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "A single parquet file where each row corresponds to a session and contains a list of 100 predicted product IDs (ASINs) in decreasing order of confidence (most confident at index 0, least at index 99).",
+  "special_instructions": "1. Predictions must be made only for sessions from English (UK), German (DE), and Japanese (JP) locales. 2. The output must be a parquet file. 3. Each session must have exactly 100 predicted product IDs. 4. Product IDs must be listed in decreasing order of confidence. 5. Use only the training set shared across all tasks for model training. 6. The evaluation metric is MRR@100; the correct product must appear in the top 100 predictions to contribute to the score. 7. Incorporation of product attributes (e.g., title, brand, price, color, desc) is strongly encouraged to improve semantic understanding and cross-locale generalization. 8. Use of pre-trained multilingual models (e.g., mBERT, XLM-R) for encoding product titles and descriptions is permitted and recommended to handle multilingual inputs. 9. External data (e.g., knowledge bases, product catalogs) is not allowed; only the provided dataset should be used. 10. To address data imbalance across locales, strategies such as locale-aware sampling or weighting are allowed but must be reproducible. 11. Models should be trained with reproducibility in mind: use fixed random seeds where applicable and document key hyperparameters."
+}

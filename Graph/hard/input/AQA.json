@@ -1,0 +1,26 @@
+{
+  "task_type": "generation",
+  "goal_description": "Develop a retrieval model that matches academic papers to professional questions based on relevance.",
+  "metric": {
+    "metric_name": "Mean Average Precision (MAP) and top-k MAP",
+    "metric_formula": "$$ AP(V_q) = \\frac{1}{R_q} \\sum_{k=1}^{M} P_q (k) 1_k $$\n$$ MAP = \\frac{1}{n} \\sum_{q=1}^{n} AP(V_q) $$"
+  },
+  "target_col": "pids",
+  "data_information": {
+    "data_type": "Graph",
+    "train": {
+      "data_location": "qa_train.txt",
+      "data_description": "Training data consists of question dictionaries with fields: 'question' (brief question), 'body' (detailed question content), and 'pids' (list of relevant paper IDs). Contains 8,757 entries. Each entry includes semantic information from the question and links to relevant academic papers."
+    },
+    "test": {
+      "data_location": "qa_valid_wo_ans.txt",
+      "data_description": "Validation data contains questions without provided paper IDs. Format includes 'question' and 'body'. Contains 2,919 entries. Semantic information is derived from the detailed question content."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "A .txt file where each line contains 20 paper IDs (pids) separated by English commas. The order of pids indicates relevance, with the most relevant appearing first.",
+  "special_instructions": "1. Participants must use features such as title and abstract from the 'pid_to_title_abs_new.json' dataset for matching questions to papers. 2. Participants are allowed to use the OAG dataset and DBLP Citation dataset for additional information, including citation relationships and paper metadata. 3. External data beyond what is mentioned in the task description is not permitted. 4. The output must strictly follow the specified format in 'result.txt'. 5. No specific model or methodology is enforced, but participants should aim to develop a retrieval-based approach leveraging semantic similarity between questions and papers."
+}

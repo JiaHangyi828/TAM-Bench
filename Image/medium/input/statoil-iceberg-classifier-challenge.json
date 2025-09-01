@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Predict whether an image contains a ship or an iceberg based on radar backscatter data.",
+  "metric": {
+    "metric_name": "Log loss",
+    "metric_formula": ""
+  },
+  "target_col": "is_iceberg",
+  "data_information": {
+    "data_type": "Image",
+    "train": {
+      "data_location": "train.json",
+      "data_description": "Each image has two flattened bands (band_1 and band_2) with 75x75 pixel values in dB units, an incidence angle (with some missing values marked as 'na'), and the target variable is_iceberg. The features to be used include 'band_1', 'band_2', and 'inc_angle'."
+    },
+    "test": {
+      "data_location": "test.json",
+      "data_description": "Each image has two flattened bands (band_1 and band_2) with 75x75 pixel values in dB units and an incidence angle. Machine-generated images are included to prevent hand labeling but are excluded from scoring."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "A CSV file with two columns: id and is_iceberg, where is_iceberg is the predicted probability of the image containing an iceberg (a number between 0 and 1). The file should include a header row.",
+  "special_instructions": "1. Handle missing incidence angles ('na') appropriately during modeling. 2. Ensure predictions are probabilities between 0 and 1 for log loss evaluation. 3. Use 'band_1', 'band_2', and 'inc_angle' as features explicitly. 4. Any binary classification model suitable for this task can be used, but consider handling class imbalance if necessary."
+}

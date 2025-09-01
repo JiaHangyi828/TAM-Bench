@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Predict the set of bird species calling in each time window of the soundscape recordings.",
+  "metric": {
+    "metric_name": "micro averaged F1",
+    "metric_formula": "```F1 = 2 * (precision * recall) / (precision + recall)```"
+  },
+  "target_col": "birds",
+  "data_information": {
+    "data_type": "Audio",
+    "train": {
+      "data_location": "train_audio",
+      "data_description": "Short mp3 recordings of individual bird calls from xeno-canto.org, accompanied by train.csv metadata (ebird_code, recodist, location, date, filename, etc.)."
+    },
+    "test": {
+      "data_location": "test_audio",
+      "data_description": "Approximately 150 long (≈10‑minute) mp3 recordings from three remote sites. test.csv provides row identifiers, site IDs, seconds (5‑second windows for sites 1 & 2, file‑level for site 3) and audio_id."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "CSV with header row_id,birds. For each row_id output a space‑separated list of unique ebird codes present in that time window, or the token \"nocall\" if no bird call is detected.",
+  "special_instructions": "1. Provide predictions for every row_id in test.csv.\n2. Use space‑separated ebird codes (e.g., \"amecro amerob\").\n3. If no bird call is present in the window, output \"nocall\".\n4. Sites 1 and 2 require 5‑second resolution predictions; site 3 predictions are at the whole‑file level (seconds field may be null).\n5. Follow the exact submission format shown in the task description, including the header."
+}

@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Develop an NLP model to predict the affinity between misconceptions and incorrect answers (distractors) in multiple-choice questions, assisting human labelers in tagging distractors with appropriate misconceptions.",
+  "metric": {
+    "metric_name": "Mean Average Precision @ 25 (MAP@25)",
+    "metric_formula": "$$MAP@25=\\frac{1}{U}\\sum_{u=1}^{U}\\sum_{k=1}^{min(n,25)}P(k)\\times rel(k)$$"
+  },
+  "target_col": "MisconceptionId",
+  "data_information": {
+    "data_type": "Texxt",
+    "train": {
+      "data_location": "train.csv",
+      "data_description": "Features include QuestionId, ConstructId, ConstructName, CorrectAnswer, SubjectId, SubjectName, QuestionText, Answer[A/B/C/D]Text, Misconception[A/B/C/D]Id. Text data extracted via OCR, includes mathematical content."
+    },
+    "test": {
+      "data_location": "test.csv",
+      "data_description": "Same structure as train.csv but without Misconception[A/B/C/D]Id labels."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "For each `QuestionId_Answer` row in the test set, predict up to 25 space-delimited `MisconceptionId` values. The file should be named `submission.csv` with the format: `QuestionId_Answer,MisconceptionId`.",
+  "special_instructions": "1. Submissions must be made through Kaggle Notebooks with a maximum runtime of 9 hours for both CPU and GPU notebooks. 2. Internet access is disabled during submission. 3. Freely & publicly available external data and pre-trained models are allowed. 4. For the Efficiency Prize, submissions must run on CPU only and will be evaluated based on runtime and predictive performance using the efficiency score formula. 5. Ensure predictions align with known misconceptions while generalizing to new ones. 6. Must use features such as 'QuestionText', 'Answer[A/B/C/D]Text', and 'ConstructName' as they are critical for predicting misconceptions. 7. Consider leveraging transformer-based models like BERT or domain-specific embeddings to handle mathematical content complexity. 8. Fine-tuning methods should be explored to improve model accuracy. 9. Model parameters such as learning rate, batch size, and number of epochs should be carefully tuned, especially for the Efficiency Prize. 10. Handle duplicate correct labels in predictions as specified in the evaluation metric details."
+}

@@ -1,0 +1,26 @@
+{
+  "task_type": "sequence_modeling",
+  "goal_description": "Identify and list the sequence of recognized Italian sign gestures from multi-modal RGB-Depth-Audio and skeleton data, outputting the ordered numeric labels of the gestures present in each video.",
+  "metric": {
+    "metric_name": "Levenshtein distance normalized by total number of gestures",
+    "metric_formula": "Sum of Levenshtein distances across all sequences divided by the total number of gestures in the ground truth"
+  },
+  "target_col": "R",
+  "data_information": {
+    "data_type": "Multi-Modal",
+    "train": {
+      "data_location": "ZIP files (e.g., Sample00001.zip) containing multi-modal data and annotations",
+      "data_description": "Each ZIP contains RGB video, depth video, user segmentation video, audio file, and a MATLAB file with skeleton data and gesture labels. The MATLAB structure includes NumFrames, FrameRate, MaxDepth, Frames (skeleton data in Kinect format), and Labels (with Begin, End, and Name for each gesture instance). Frame-level MAT files include RGB, Depth, UserIndex, and Skeleton structures with joint positions and rotations. Must use all modalities: RGB, Depth, Audio, User mask, and Skeleton data for modeling. Skeleton data includes joint positions (WorldPosition, PixelPosition) and orientations (WorldRotation as quaternions). Labels are provided only in training, with temporal boundaries (Begin, End frames) for each gesture instance."
+    },
+    "test": {
+      "data_location": "ZIP files (e.g., Session00001.zip) without Labels field",
+      "data_description": "Same multi-modal data as training (RGB, depth, audio, user mask, skeleton), but without gesture labels; the Labels field in the MATLAB file is empty and must be predicted. Gesture segmentation must be performed using motion cues from skeleton joints, changes in RGB/Depth, and audio activity. Model must be user-independent, generalizing across different signers."
+    },
+    "inference": {
+      "data_location": "N/A",
+      "data_description": "N/A"
+    }
+  },
+  "output_format": "SessionID,label1,label2,...,labelN where labels are numeric (1-20) representing the ordered sequence of recognized gestures from the 20 Italian sign vocabulary",
+  "special_instructions": "1. Only include gestures from the predefined vocabulary of 20 Italian signs (labels 1-20); exclude non-interest gestures. 2. Output must be ordered by temporal occurrence in the video. 3. Use all available modalities: RGB, Depth, Audio, User mask, and Skeleton data for recognition. 4. Skeleton data must be used to detect motion onset and offset for gesture segmentation using joint trajectories (e.g., hand, wrist, elbow) and orientation changes. 5. The sequence ID is the ZIP file name. 6. Do not include any gesture not in the 20-class list. 7. Model must be user-independent, trained across multiple users and generalize to unseen signers. 8. Handle overlapping or ambiguous gestures by selecting the most temporally coherent sequence based on multimodal alignment. 9. Use frame-level MAT files for fine-grained analysis with temporal modeling (e.g., LSTMs, Transformers, or TCN networks) operating on sequences of multimodal features. 10. Segment gestures using a combination of motion thresholds in skeleton joints, depth changes, and audio activity detection."
+}

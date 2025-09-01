@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Predict whether a mushroom is edible or poisonous based on its physical characteristics.",
+  "metric": {
+    "metric_name": "Matthews correlation coefficient (MCC)",
+    "metric_formula": ""
+  },
+  "target_col": "class",
+  "data_information": {
+    "data_type": "Tabular",
+    "train": {
+      "data_location": "train.csv",
+      "data_description": "The training dataset contains features describing physical characteristics of mushrooms and the binary target column `class` indicating whether the mushroom is edible (`e`) or poisonous (`p`). Feature distributions are close to, but not exactly the same as the original UCI Mushroom dataset. Categorical values may exist that are not found in the original dataset."
+    },
+    "test": {
+      "data_location": "test.csv",
+      "data_description": "The test dataset contains the same features as the training dataset but without the target column `class`. The goal is to predict the `class` for each row in this dataset."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "For each `id` in the test set, provide predictions in a CSV file with the format: id,class\\n3116945,e\\n3116946,p\\n3116947,e\\netc.",
+  "special_instructions": "1. Handle categorical values that are not present in the original UCI Mushroom dataset as part of data preprocessing. 2. Optionally use the original UCI Mushroom dataset to explore differences or improve model performance. 3. Ensure predictions are submitted in the exact specified CSV format with headers. 4. All features in the dataset should be considered relevant unless otherwise stated. 5. Flexibility is allowed in choosing an appropriate machine learning model and setting its hyperparameters. 6. Methods for handling categorical variables, missing data, or other preprocessing steps should be determined by the competitor, especially for unseen categories."
+}

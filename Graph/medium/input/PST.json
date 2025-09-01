@@ -1,0 +1,26 @@
+{
+    "task_type": "classification",
+    "goal_description": "The model needs to identify and score the importance of each reference in a given paper, determining whether it is a 'source paper' that inspired or was indispensable to the main ideas or methods of the paper.",
+    "metric": {
+      "metric_name": "MAP (Mean Average Precision)",
+      "metric_formula": "$$ AP(V_q) = \\frac{1}{R_q} \\sum_{k=1}^{M} P_q (k) 1_k $$\n$$ MAP = \\frac{1}{n} \\sum_{q=1}^{n} AP(V_q) $$"
+    },
+    "target_col": "importance_score",
+    "data_information": {
+      "data_type": "Graph",
+      "train": {
+        "data_location": "paper_source_trace_train_ans.json",
+        "data_description": "Each entry contains paper ID, title, list of source references with metadata (authors, venue, year, referenced_serial_number), full reference list, authors of the paper, venue, and year. The XML files contain the full text of the papers, including semantic information, language structure, and context."
+      },
+      "test": {
+        "data_location": "paper_source_trace_valid_wo_ans.json",
+        "data_description": "Similar structure to the training data but without ground truth labels for source references. XML files for full text are available under the paper-xml folder, containing semantic information, language structure, and context."
+      },
+      "inference": {
+        "data_location": "",
+        "data_description": ""
+      }
+    },
+    "output_format": "A JSON object where each key is a paper ID and the value is a dictionary mapping each reference's serial number to an importance score normalized between [0, 1].",
+    "special_instructions": "1. Importance scores must be normalized to the range [0, 1]. 2. Models should not rely on manual reading of papers; automation is required. 3. Extra training data (paper_source_gen_by_rule.json) can be used but is noisy and collected via keyword-based rules. 4. Additional attributes of papers from DBLP Citation or OAG may be used. 5. No external data beyond what is provided is allowed. 6. Features must include data derived from the XML files, such as the full text of the paper, semantic information, and language structure. 7. Transformer-based models (e.g., BERT) are recommended for handling NLP tasks effectively. 8. Consider tuning model parameters and hyperparameters during model design and training. 9. Ensure the method avoids human intervention and relies solely on automated processes."
+  }

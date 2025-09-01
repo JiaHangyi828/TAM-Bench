@@ -1,0 +1,26 @@
+{
+    "task_type": "classification",
+    "goal_description": "Develop a model to detect incorrectly assigned papers for a given author based on their profile and paper attributes.",
+    "metric": {
+      "metric_name": "WeightedAUC",
+      "metric_formula": "$$Weight = \\frac{\\#ErrorsOfTheAuthor}{\\#TotalErrors}$$\n\nFor all authors (M is the number of authors),\n$$WeightedAUC = \\sum_{i=1}^{M} AUC_i \\times weight_i$$"
+    },
+    "target_col": "outliers",
+    "data_information": {
+      "data_type": "Graph",
+      "train": {
+        "data_location": "train_author.json",
+        "data_description": "Data includes author ID, name, normal_data (correctly assigned paper IDs), and outliers (incorrectly assigned paper IDs). Paper attributes include title, authors' names, organization, venue, year, keywords, and abstract. Key features like title, authors' names, organization, venue, year, keywords, and abstract are crucial for detecting incorrectly assigned papers."
+      },
+      "test": {
+        "data_location": "ind_valid_author.json",
+        "data_description": "Similar format to train data. Each author's 'papers' field contains all their papers, including both correctly and incorrectly assigned ones. The same key features as in the training set should be utilized."
+      },
+      "inference": {
+        "data_location": "ind_valid_author_submit.json",
+        "data_description": "Validation set submission example. Predictions must follow the specified output format."
+      }
+    },
+    "output_format": "JSON object with author IDs as keys and predictions for each paper (0 for correct assignment, 1 for incorrect) as values.",
+    "special_instructions": "1. Participants are not allowed to use existing academic search systems' disambiguation results. 2. The evaluation metric focuses on weighted AUC, emphasizing authors with more errors. 3. Must-use features include title, authors' names, organization, venue, year, keywords, and abstract. 4. Participants should develop their own model and may need to define or optimize specific model parameters. 5. Methods such as NLP techniques and feature engineering strategies are encouraged to solve the problem effectively."
+  }

@@ -1,0 +1,26 @@
+{
+  "task_type": "Multi-Modal",
+  "goal_description": "Predict a set of 6 plant traits from crowd-sourced plant images and ancillary data to advance understanding of global biodiversity patterns.",
+  "metric": {
+    "metric_name": "Mean R^2",
+    "metric_formula": "The $R^2$ is the ratio of the sum of squares the residuals ($SS_{\\text{res}}$) to the total sum of squares ($SS_{\\text{tot}}$). Only $R^2$ values > 0 are considered."
+  },
+  "target_col": "X[*]_mean (e.g., X1080, X50, etc.)",
+  "data_information": {
+    "data_type": "Multi-Modal",
+    "train": {
+      "data_location": "train_images folder and train.csv",
+      "data_description": "Training data includes plant images (.jpeg) and a CSV file with labels and ancillary data (climate variables, soil variables, satellite data). The ancillary data includes WORLDCLIM_BIO[*] (climate variables), SOIL_[*] (soil variables), MODIS_[*]/VOD_[*] (satellite data), and target traits (X[*]_mean) with their standard deviations (X[*]_sd)."
+    },
+    "test": {
+      "data_location": "test_images folder and test.csv",
+      "data_description": "Test data includes plant images (.jpeg) and a CSV file with ancillary data (climate variables, soil variables, satellite data) but no labels."
+    },
+    "inference": {
+      "data_location": "N/A",
+      "data_description": "N/A"
+    }
+  },
+  "output_format": "A .csv file with columns: `id` and predictions for each trait (e.g., X1080, X50, etc.).",
+  "special_instructions": "1. Implement a multi-task learning scheme using Convolutional Neural Networks (CNNs) like ConvNext or Transformers to predict multiple plant traits simultaneously. 2. Integrate all ancillary geodata (WORLDCLIM_BIO[*], SOIL_[*], MODIS_[*]/VOD_[*]) to supplement plant photographs. 3. Use response-based data augmentation during training by incorporating the standard deviation of traits (X[*]_sd). 4. Consider using model ensembles with different CNN backbones to improve performance. 5. The evaluation metric is the mean $R^2$ over all 6 traits, with only $R^2$ values > 0 considered."
+}

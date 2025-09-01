@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Predict the probability of each bird species being present in a ten-second audio clip.",
+  "metric": {
+    "metric_name": "Area under the ROC curve",
+    "metric_formula": ""
+  },
+  "target_col": "Probability",
+  "data_information": {
+    "data_type": "Audio",
+    "train": {
+      "data_location": "/essential_data/src_wavs, /essential_data/rec_labels_test_hidden.txt, /essential_data/CVfolds_2.txt, /supplemental_data/spectrograms, /supplemental_data/filtered_spectrograms, /supplemental_data/segmentation_examples, /supplemental_data/supervised_segmentation, /supplemental_data/segment_features.txt, /supplemental_data/segment_rectangles.txt, /supplemental_data/histogram_of_segments.txt",
+      "data_description": "Raw WAV files (10-second mono recordings sampled at 16kHz), spectrograms, filtered spectrograms, and segmentation data. Labels are provided for training set with rec_id and corresponding species labels. Supplementary data includes BMP image files of spectrograms, modified spectrograms with noise filtering, pixel-level annotations for bird sounds, segment features, bounding boxes for segments, and histogram-of-segments feature vectors."
+    },
+    "test": {
+      "data_location": "/essential_data/src_wavs, /essential_data/rec_labels_test_hidden.txt, /essential_data/CVfolds_2.txt",
+      "data_description": "Raw WAV files without labels; test set is indicated by CVfolds_2.txt where fold=1. Missing labels are denoted by '?'."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "Id,Probability\\n0,0\\n1,0\\n2,0\\n...\\n100,0\\n101,0\\netc...",
+  "special_instructions": "1. Combine 'rec_id' and 'species' into a single 'Id' column by multiplying 'rec_id' by 100 and adding 'species'. For example, ('rec_id', 'species') pair '1,2' becomes '102'. 2. Use pre-processed features such as spectrograms, filtered spectrograms, or histogram_of_segments.txt if needed. These can be found in the supplemental data directories. 3. Predict probabilities for all 19 species for each recording in the test set. 4. Handle missing species labels in the test set (denoted by '?') by predicting probabilities for all possible species. 5. Optionally use supplementary data like segmentation_examples, supervised_segmentation, and segment_rectangles.txt to improve model performance."
+}

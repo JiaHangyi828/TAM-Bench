@@ -1,0 +1,26 @@
+{
+  "task_type": "regression",
+  "goal_description": "Predict the fare amount for a taxi ride given the pickup and dropoff locations.",
+  "metric": {
+    "metric_name": "Root mean-squared error",
+    "metric_formula": ""
+  },
+  "target_col": "fare_amount",
+  "data_information": {
+    "data_type": "Tabular",
+    "train": {
+      "data_location": "train.csv",
+      "data_description": "Features include pickup_datetime (timestamp), pickup_longitude (float), pickup_latitude (float), dropoff_longitude (float), dropoff_latitude (float), passenger_count (integer). Target is fare_amount (float)."
+    },
+    "test": {
+      "data_location": "test.csv",
+      "data_description": "Features include pickup_datetime (timestamp), pickup_longitude (float), pickup_latitude (float), dropoff_longitude (float), dropoff_latitude (float), passenger_count (integer). No target column provided."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "For each `key` in the test set, predict a value for the `fare_amount` variable. The file should contain a header and have the following format: key,fare_amount\\n2015-01-27 13:08:24.0000002,11.00\\n2015-02-27 13:08:24.0000002,12.05...",
+  "special_instructions": "1. Must-use features include pickup_longitude, pickup_latitude, dropoff_longitude, dropoff_latitude, and passenger_count as they are critical to predicting fare_amount. 2. Simulate submission files during cross-validation using the training set if necessary. 3. Ensure predictions are formatted to two decimal places as shown in the sample_submission.csv. 4. Preprocessing steps such as handling missing values, scaling, encoding timestamps, and feature engineering may be required but are not explicitly detailed. 5. Use appropriate regression models and tune hyperparameters based on RMSE performance."
+}

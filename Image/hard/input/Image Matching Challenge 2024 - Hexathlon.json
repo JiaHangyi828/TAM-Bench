@@ -1,0 +1,26 @@
+{
+  "task_type": "regression",
+  "goal_description": "Develop a model to generate accurate 3D spatial representations (camera poses) from sets of images taken in diverse scenarios and environments, regardless of the source domain.",
+  "metric": {
+    "metric_name": "mean Average Accuracy (mAA) of the registered camera centers",
+    "metric_formula": "$$||C_g - T(C)|| < t$$, where $C_g$ is the ground-truth camera center, $C$ is the predicted camera center, $T$ is the best similarity transformation, and $t$ is a threshold."
+  },
+  "target_col": "rotation_matrix,translation_vector",
+  "data_information": {
+    "data_type": "Image",
+    "train": {
+      "data_location": "train/*/images, train/*/images_full, train/train_labels.csv, train/*/sfm",
+      "data_description": "Images are taken near the same location, possibly with sequential capture ordering and significant image-to-image content overlap. Images may vary in viewpoint, sensor type, time of day/year, and occlusions. The train_labels.csv provides ground truth camera poses: rotation_matrix (3x3, flattened row-major, ';'-separated), translation_vector (3D, ';'-separated). Some datasets include images_full with additional images. The sfm folder contains 3D reconstructions viewable in COLMAP. Features for modeling may include image features (e.g., keypoints, descriptors), metadata, and information from the provided 3D reconstructions."
+    },
+    "test": {
+      "data_location": "test/*/images, sample_submission.csv",
+      "data_description": "Test images are a subset of the 'church' scene from train, provided for example purposes. The actual hidden test set contains about 1,000 images with limited image-to-image overlap and randomized ordering. The sample_submission.csv provides the required output format."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "CSV file named 'submission.csv' with columns: image_path,dataset,scene,rotation_matrix,translation_vector. The rotation_matrix is a 3x3 matrix flattened in row-major order with values separated by ';'. The translation_vector is a 3D vector with values separated by ';'. Unregistered images must include 'nan' values.",
+  "special_instructions": "1. Submissions must be made via Notebooks with CPU/GPU runtime ≤ 9 hours. 2. Internet access is disabled during submission. 3. Public external data/models are allowed. 4. The output file must be named 'submission.csv'. 5. The process of reconstructing 3D models from images is called Structure from Motion (SfM). 6. There are 6 problem categories: phototourism/historical preservation, night vs day/temporal changes, aerial/mixed aerial-ground, repeated structures, natural environments, transparencies/reflections. 7. Evaluation uses a RANSAC-like approach to find the best similarity transformation for camera registration. 8. Matrices in the output must be flattened in row-major order and separated by ';'. 9. Unregistered images must have 'nan' values in the output. 10. It is recommended to use image features (e.g., keypoints, descriptors), metadata, and information from the provided 3D reconstructions (sfm) for modeling. 11. You may use classical SfM pipelines (e.g., COLMAP), deep learning-based pose regression, or hybrid approaches. 12. Clearly document any model architecture, pipeline, or hyperparameters used for reproducibility."
+}

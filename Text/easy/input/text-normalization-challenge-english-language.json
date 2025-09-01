@@ -1,0 +1,26 @@
+{
+  "task_type": "normalization",
+  "goal_description": "Create a model to normalize text by converting written expressions into spoken forms suitable for text-to-speech systems.",
+  "metric": {
+    "metric_name": "Prediction accuracy",
+    "metric_formula": ""
+  },
+  "target_col": "after",
+  "data_information": {
+    "data_type": "Text",
+    "train": {
+      "data_location": "en_train.csv",
+      "data_description": "The training set contains columns: sentence_id, token_id, before (raw text), after (normalized text), and class (token type). Each token is identified by an id formed by concatenating sentence_id and token_id with an underscore. The dataset includes semantic information such as context and language structure."
+    },
+    "test": {
+      "data_location": "en_test.csv",
+      "data_description": "The test set contains columns: sentence_id, token_id, and before (raw text). It does not contain the normalized text. Semantic information such as context and language structure should be inferred from raw text."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "A CSV file with two columns: id (concatenation of sentence_id and token_id) and after (predicted normalized text). The file must include a header row.",
+  "special_instructions": "1. The predicted string must match the actual normalized string exactly to be counted as correct. 2. Use the provided en_sample_submission.csv as a reference for the correct submission format. 3. Must use features such as 'sentence_id', 'token_id', and 'class' during modeling to ensure proper alignment and token-level processing. 4. Consider using sequence-to-sequence models or transformer-based architectures for handling text normalization effectively. 5. Define model parameters such as learning rate, batch size, and number of epochs for reproducibility and optimal performance."
+}

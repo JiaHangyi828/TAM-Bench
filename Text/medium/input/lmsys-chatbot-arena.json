@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "goal_description": "Predict the probability of a user preferring one chatbot response over another or choosing a tie.",
+  "metric": {
+    "metric_name": "Log loss with 'eps=auto'",
+    "metric_formula": ""
+  },
+  "target_col": "winner_model_[a/b/tie]",
+  "data_information": {
+    "data_type": "Text",
+    "train": {
+      "data_location": "train.csv",
+      "data_description": "Features include: id (unique identifier), model_[a/b] (identity of models), prompt (input text to both models), response_[a/b] (responses from each model), winner_model_[a/b/tie] (binary columns marking judge's selection). Key features for prediction are 'prompt', 'response_a', and 'response_b'."
+    },
+    "test": {
+      "data_location": "test.csv",
+      "data_description": "Features include: id (unique identifier), prompt (input text to both models), response_[a/b] (responses from each model). The same key features ('prompt', 'response_a', 'response_b') should be used as in the training set."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "id,winner_model_a,winner_model_b,winner_tie\\n136060,0.33,0.33,0.33\\n211333,0.33,0.33,0.33\\netc",
+  "special_instructions": "1. Must use features: 'prompt', 'response_a', 'response_b' for prediction. 2. No specific model type is required, but methods such as NLP similarity metrics, sentiment analysis, or other text comparison techniques may be useful. 3. Model parameters or hyperparameters are not specified; consider tuning based on performance. 4. Predict probabilities for each target class (winner_model_a, winner_model_b, winner_tie) in test set. 5. Ensure output file contains header and follows sample_submission.csv format."
+}

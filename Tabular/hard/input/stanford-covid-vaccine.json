@@ -1,0 +1,26 @@
+{
+  "task_type": "regression",
+  "goal_description": "Predict the degradation rates at each base of an RNA molecule for specific experimental conditions.",
+  "metric": {
+    "metric_name": "Mean columnwise root mean squared error (MCRMSE)",
+    "metric_formula": "$\\textrm{MCRMSE} = \\frac{1}{N_{t}}\\sum_{j=1}^{N_{t}}\\sqrt{\\frac{1}{n} \\sum_{i=1}^{n} (y_{ij} - \\hat{y}_{ij})^2}$"
+  },
+  "target_col": "reactivity, deg_Mg_pH10, deg_Mg_50C",
+  "data_information": {
+    "data_type": "Tabular",
+    "train": {
+      "data_location": "train.json",
+      "data_description": "Features include id, seq_scored, seq_length, sequence, structure, reactivity, deg_pH10, deg_Mg_pH10, deg_50C, deg_Mg_50C, *_error_*, predicted_loop_type, and S/N filter. The sequence is a combination of A, G, U, and C characters, while structure describes pairing using parentheses and dots. Reactivity and degradation values are provided for the first 68 bases."
+    },
+    "test": {
+      "data_location": "test.json",
+      "data_description": "Test data contains id, seq_scored, seq_length, sequence, structure, and predicted_loop_type but lacks ground truth values for reactivity and degradation metrics."
+    },
+    "inference": {
+      "data_location": "",
+      "data_description": ""
+    }
+  },
+  "output_format": "CSV file with columns: id_seqpos, reactivity, deg_Mg_pH10, deg_pH10, deg_Mg_50C, deg_50C. Each row corresponds to predictions for a specific sequence position.",
+  "special_instructions": "1. Only predict values for the first 'seq_scored' positions, though predictions for all positions in the sequence must be included in the submission file. 2. Use features such as 'sequence', 'structure', and 'predicted_loop_type' as they are critical for accurate predictions. 3. Consider methods for handling noise or poor signal-to-noise measurements in the training data, especially since some samples may have negative values or low signal-to-noise ratios. 4. While no specific model type is required, ensure that your approach can handle regression tasks effectively. 5. Ensure predictions align with the experimental conditions described: reactivity, deg_Mg_pH10, and deg_Mg_50C are scored, while deg_pH10 and deg_50C are required but not scored."
+}
