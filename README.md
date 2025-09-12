@@ -144,10 +144,14 @@ More results are reported in the paper.
 If you use TAM-Bench in your research, please cite:
 
 ```
-@article{tam-bench-2025,
-  title={Towards Adaptive ML Benchmarks: Web-Agent-Driven Construction, Domain Expansion, and Metric Optimization},
-  author={Anonymous},
-  year={2025}
+@misc{jia2025adaptivemlbenchmarkswebagentdriven,
+      title={Towards Adaptive ML Benchmarks: Web-Agent-Driven Construction, Domain Expansion, and Metric Optimization}, 
+      author={Hangyi Jia and Yuxi Qian and Hanwen Tong and Xinhui Wu and Lin Chen and Feng Wei},
+      year={2025},
+      eprint={2509.09321},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2509.09321}, 
 }
 ```
 
